@@ -16,8 +16,6 @@ pipeline {
 		NEXUS_GRP_REPO = 'vpro-maven-group'
         NEXUS_LOGIN = 'nexuslogin'
     }
-    # dependencies will be downloaded from Nexus Repository Manager, so we need to configure the settings.xml file to point to our Nexus Repository Manager
-    # we will use the settings.xml file to configure the Nexus Repository Manager, so we need to copy the settings.xml file to the Jenkins workspace before running the Maven build.
     stages {
         stage('Build'){
             steps {
