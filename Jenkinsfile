@@ -29,7 +29,7 @@ pipeline {
         registryCredential = 'ecr:us-east-1:awscreds'
 
         appRegistry = '788143860357.dkr.ecr.us-east-1.amazonaws.com/vprofileappimg'
-        vprofileRegistry = '788143860357.dkr.ecr.us-east-1.amazonaws.com'
+        vprofileRegistry = "https://788143860357.dkr.ecr.us-east-1.amazonaws.com"
     }
 
     stages {
