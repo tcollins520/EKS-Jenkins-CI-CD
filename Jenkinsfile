@@ -20,16 +20,16 @@ pipeline {
         NEXUSIP = '172.31.19.169'
         NEXUSPORT = '8081'
         NEXUS_GRP_REPO = 'vpro-maven-group'
-
         NEXUS_LOGIN = 'nexuslogin'
-
         SONARSERVER = 'sonarserver'
         SONARSCANNER = 'sonarscanner'
-
         registryCredential = 'ecr:us-east-1:awscreds'
-
         appRegistry = '788143860357.dkr.ecr.us-east-1.amazonaws.com/vprofileappimg'
         vprofileRegistry = "https://788143860357.dkr.ecr.us-east-1.amazonaws.com"
+        cluster = "vproappstaging"
+        service = "vproapptask1-service-o2lo0ihf"
+
+    
     }
 
     stages {
@@ -139,12 +139,15 @@ pipeline {
             }
         }
 
-        stage('Cleanup') {
+        stage('Deploy to staging ECS') {
             steps {
-                sh 'docker system prune -f'
+                withAWS(credentials: 'awscreds', region: 'us-east-1') {
+                    sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
+                } 
             }
         }
     }
+
 
     post {
 
