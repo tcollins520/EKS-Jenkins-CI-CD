@@ -4,14 +4,15 @@ This project demonstrates a production-style DevOps pipeline that integrates aut
 
 This repository implements a complete CI/CD workflow:
 
-Developer pushes code to GitHub
-Jenkins triggers the pipeline automatically
-Maven builds the application
-Checkstyle performs code standard validation
-SonarQube runs static code analysis
-Docker image is built
-Image is pushed to Amazon ECR
-Amazon ECS deploys the updated containerized application
+* Developer pushes code to GitHub
+* Jenkins triggers the pipeline automatically
+* Maven builds the application
+* Checkstyle performs code standard validation
+* SonarQube runs static code analysis
+* Docker image is built
+* Image is pushed to Amazon ECR
+* Amazon ECS deploys the updated containerized application
+
 🏗️ CI/CD Architecture
 Developer Pushes Code
           ↓
