@@ -29,7 +29,7 @@ pipeline {
         registryCredential = 'ecr:us-east-1:awscreds'
 
         appRegistry = '788143860357.dkr.ecr.us-east-1.amazonaws.com/vprofileappimg'
-        vprofileRegistry = 'https://788143860357.dkr.ecr.us-east-1.amazonaws.com'
+        vprofileRegistry = '788143860357.dkr.ecr.us-east-1.amazonaws.com'
     }
 
     stages {
@@ -128,7 +128,8 @@ pipeline {
             steps {
                 script {
 
-                    docker.withRegistry("${vprofileRegistry}", "${registryCredential}") {
+                    docker.withRegistry("${vprofileRegistry}", 
+                    "${registryCredential}") {
 
                         dockerImage.push("${BUILD_NUMBER}")
                         dockerImage.push("latest")
