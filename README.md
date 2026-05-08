@@ -44,6 +44,7 @@ Slack Notifications
 CI/CD Tools
 * Jenkins
 * GitHub
+* GitHub Webhooks
 * SonarQube
 * Checkstyle
 * Cloud & Containers
@@ -69,7 +70,8 @@ ECS-JenkinsCI-CD/
 * ├── src/
 * ├── target/
 * ├── README.md
-└── deployment/
+
+  
 ⚙️ Prerequisites
 Before running this project, ensure you have:
 * AWS Account
@@ -139,12 +141,9 @@ Maven build lifecycle integration
 Production-style DevOps workflow
 📸 Future Enhancements
 Terraform Infrastructure as Code
-Jenkins Shared Libraries
 Blue/Green ECS Deployments
 Kubernetes Migration
 GitHub Webhooks
-AWS CloudWatch Monitoring
-Trivy Container Security Scanning
 📚 Skills Demonstrated
 
 This project demonstrates hands-on experience with:
