@@ -26,6 +26,8 @@ Developer Pushes Code
           ↓
  SonarQube Analysis
           ↓
+Slack Notifications
+          ↓
      Docker Build
           ↓
     Push to AWS ECR
@@ -33,49 +35,54 @@ Developer Pushes Code
  Deploy to AWS ECS
           ↓
  Running ECS Service
+       ↓
+ Slack Notifications
+    
+
+ 
 🛠️ Technologies Used
 CI/CD Tools
-Jenkins
-GitHub
-SonarQube
-Checkstyle
-Cloud & Containers
-Docker
-AWS ECR
-AWS ECS
-AWS IAM
+* Jenkins
+* GitHub
+* SonarQube
+* Checkstyle
+* Cloud & Containers
+* Docker
+* AWS ECR
+* AWS ECS
+* AWS IAM
 Build Tools
-Maven
-Java
+* Maven
+* Java
 DevOps Concepts
-Continuous Integration
-Continuous Deployment
-Static Code Analysis
-Containerization
-Infrastructure Automation
+* Continuous Integration
+* Continuous Deployment
+* Static Code Analysis
+* Containerization
+* Infrastructure Automation
 📂 Repository Structure
 ECS-JenkinsCI-CD/
-│
-├── Jenkinsfile
-├── Dockerfile
-├── pom.xml
-├── src/
-├── target/
-├── README.md
+* │
+* ├── Jenkinsfile
+* ├── Dockerfile
+* ├── pom.xml
+* ├── src/
+* ├── target/
+* ├── README.md
 └── deployment/
 ⚙️ Prerequisites
-
 Before running this project, ensure you have:
-
-AWS Account
-Jenkins Server
-Docker Installed
-Java JDK Installed
-Maven Installed
-SonarQube Server
-AWS CLI Configured
-ECS Cluster Created
-ECR Repository Created
+* AWS Account
+* Jenkins Server
+* Docker Installed
+* Java JDK Installed
+* Maven Installed
+* SonarQube Server
+* AWS CLI Configured
+* ECR Repository Created
+* ECS Cluster Created
+* Task definition Created
+* ECS Service Created
 🔐 AWS IAM Permissions
 
 The Jenkins server or IAM role should have permissions for:
@@ -88,46 +95,25 @@ CloudWatchLogsFullAccess
 
 Checkstyle is integrated into the Maven build process to enforce Java coding standards and maintain clean, consistent code quality.
 
-Run locally:
-
-mvn checkstyle:check
-✅ SonarQube Analysis
-
 SonarQube is integrated into the Jenkins pipeline for:
 
-Static code analysis
-Bug detection
-Code smell detection
-Security vulnerability scanning
-Technical debt analysis
-Quality gate enforcement
+* Static code analysis
+* Bug detection
+* Code smell detection
+* Security vulnerability scanning
+* Technical debt analysis
+* Quality gate enforcement
 
-Run SonarQube analysis locally:
-
-mvn sonar:sonar \
-  -Dsonar.projectKey=ecs-jenkins-app \
-  -Dsonar.host.url=http://<SONAR_SERVER>:9000 \
-  -Dsonar.login=<SONAR_TOKEN>
-🐳 Docker Commands
-Build Docker Image
-docker build -t ecs-jenkins-app .
-Run Docker Container
-docker run -p 8080:8080 ecs-jenkins-app
 ☁️ Amazon ECR Setup
-Create ECR Repository
-aws ecr create-repository --repository-name ecs-jenkins-app
-Authenticate Docker to ECR
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
-Tag Docker Image
-docker tag ecs-jenkins-app:latest <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/ecs-jenkins-app:latest
-Push Docker Image
-docker push <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/ecs-jenkins-app:latest
+* Create ECR Repository
+* Authenticate Docker to ECR
+* Push Docker Image to ECR
 ☁️ ECS Deployment
 ECS Components
-ECS Cluster
-ECS Task Definition
-ECS Service
-Docker Containers
+* ECS Cluster
+* ECS Task Definition
+* ECS Service
+* Docker Containers
 Application Load Balancer (Optional)
 Deployment Workflow
 
@@ -154,7 +140,6 @@ Production-style DevOps workflow
 📸 Future Enhancements
 Terraform Infrastructure as Code
 Jenkins Shared Libraries
-Slack Notifications
 Blue/Green ECS Deployments
 Kubernetes Migration
 GitHub Webhooks
