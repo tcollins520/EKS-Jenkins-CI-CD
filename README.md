@@ -86,12 +86,12 @@ Before running this project, ensure you have:
 * Task definition Created
 * ECS Service Created
 🔐 AWS IAM Permissions
+ IAM role should have permissions for:
 
-The Jenkins server or IAM role should have permissions for:
+* AmazonEC2ContainerRegistryFullAccess
+* AmazonECS_FullAccess
+* CloudWatchLogsFullAccess
 
-AmazonEC2ContainerRegistryFullAccess
-AmazonECS_FullAccess
-CloudWatchLogsFullAccess
 🔎 Code Quality Integration
 ✅ Checkstyle
 
