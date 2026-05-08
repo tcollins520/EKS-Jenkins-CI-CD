@@ -5,7 +5,7 @@ This project demonstrates a production-style DevOps pipeline that integrates aut
 This repository implements a complete CI/CD workflow:
 
 * Developer pushes code to GitHub
-* Jenkins triggers the pipeline automatically
+* Jenkins triggers the pipeline automatically using GitHub Webhooks
 * Maven builds the application
 * Checkstyle performs code standard validation
 * SonarQube runs static code analysis
