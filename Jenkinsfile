@@ -33,6 +33,11 @@ pipeline {
         appRegistry = 'tcollins520/vprofileapp'
 
         dockerHubRegistry = 'https://index.docker.io/v1/'
+        CLUSTER_NAME = 'vproapp-jenkins-eks'
+        AWS_REGION = 'us-east-1'
+
+        RELEASE_NAME = 'vproapprelease'
+        NAMESPACE = 'vroappjenkins'
         
     }
 
@@ -151,6 +156,29 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Kubernetes') {
+
+            steps {
+
+                withAWS(credentials: 'awscreds', region: "${AWS_REGION}") {
+
+                    sh """
+                    aws eks update-kubeconfig \
+                    --region ${AWS_REGION} \
+                    --name ${CLUSTER_NAME}
+
+                    helm upgrade --install ${RELEASE_NAME} helm/vproappcharts \
+                    --namespace ${NAMESPACE} \
+                    --create-namespace \
+                    --set appimage.repository=${appRegistry} \
+                    --set appimage.tag=${BUILD_NUMBER}
+                    """
+                }
+            }
+        }
+    }
+
     }
 
     post {
