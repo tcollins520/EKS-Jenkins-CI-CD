@@ -33,14 +33,7 @@ pipeline {
         appRegistry = 'tcollins520/vprofileapp'
 
         dockerHubRegistry = 'https://index.docker.io/v1/'
-        CLUSTER_NAME = 'vproapp-jenkins-eks'
-        AWS_REGION = 'us-east-1'
-
-        RELEASE_NAME = 'vproapprelease'
-        NAMESPACE = 'vroappjenkins'
-    }
-
-
+        
     }
 
     stages {
