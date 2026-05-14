@@ -37,7 +37,7 @@ pipeline {
         AWS_REGION = 'us-east-1'
 
         RELEASE_NAME = 'vproapprelease'
-        NAMESPACE = 'vroappjenkins'
+        NAMESPACE = 'vproappjenkins'
         
     }
 
@@ -177,8 +177,6 @@ pipeline {
                 }
             }
         }
-    }
-
     }
 
     post {
