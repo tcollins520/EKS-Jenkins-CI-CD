@@ -28,6 +28,8 @@ pipeline {
         SONARSERVER = 'sonarserver'
         SONARSCANNER = 'sonarscanner'
 
+    }
+
     stages {
 
         stage('Build') {
