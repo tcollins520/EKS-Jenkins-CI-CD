@@ -115,6 +115,36 @@ pipeline {
                 )
             }
         }
+
+        stage('Build App Image') {
+
+            steps {
+
+                script {
+
+                    dockerImage = docker.build(
+                        "${appRegistry}:${BUILD_NUMBER}",
+                        "-f Docker-files/app/multistage/Dockerfile ."
+                    )
+                }
+            }
+        }
+
+        stage('Upload App Image') {
+
+            steps {
+
+                script {
+
+                    docker.withRegistry("${dockerHubRegistry}",
+                    "${registryCredential}") {
+
+                        dockerImage.push("${BUILD_NUMBER}")
+                        dockerImage.push("latest")
+                    }
+                }
+            }
+        }
     }
 
     post {
