@@ -12,25 +12,21 @@ pipeline {
     }
 
     environment {
+
         SNAP_REPO = 'vprofile-snapshot'
         NEXUS_USER = 'admin'
         NEXUS_PASS = 'admin123'
         RELEASE_REPO = 'vprofile-release'
         CENTRAL_REPO = 'vpro-maven-central'
+
         NEXUSIP = '172.31.19.169'
         NEXUSPORT = '8081'
+
         NEXUS_GRP_REPO = 'vpro-maven-group'
         NEXUS_LOGIN = 'nexuslogin'
+
         SONARSERVER = 'sonarserver'
         SONARSCANNER = 'sonarscanner'
-        registryCredential = 'ecr:us-east-1:awscreds'
-        appRegistry = '788143860357.dkr.ecr.us-east-1.amazonaws.com/vprofileappimg'
-        vprofileRegistry = "https://788143860357.dkr.ecr.us-east-1.amazonaws.com"
-        cluster = "vproappstaging"
-        service = "vproapptask1-service-o2lo0ihf"
-
-    
-    }
 
     stages {
 
@@ -60,12 +56,15 @@ pipeline {
         }
 
         stage('Sonar Analysis') {
+
             environment {
                 scannerHome = tool "${SONARSCANNER}"
             }
 
             steps {
+
                 withSonarQubeEnv("${SONARSERVER}") {
+
                     sh """
                     ${scannerHome}/bin/sonar-scanner \
                     -Dsonar.projectKey=vprofile \
@@ -87,67 +86,7 @@ pipeline {
                 }
             }
         }
-
-        stage('Upload Artifact') {
-            steps {
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
-                    groupId: 'QA',
-                    version: "${BUILD_NUMBER}",
-                    repository: "${RELEASE_REPO}",
-                    credentialsId: "${NEXUS_LOGIN}",
-
-                    artifacts: [
-                        [
-                            artifactId: 'vproapp',
-                            classifier: '',
-                            file: 'target/vprofile-v2.war',
-                            type: 'war'
-                        ]
-                    ]
-                )
-            }
-        }
-
-        stage('Build App Image') {
-            steps {
-                script {
-
-                    dockerImage = docker.build(
-                        "${appRegistry}:${BUILD_NUMBER}",
-                        "-f Docker-files/app/multistage/Dockerfile ."
-                    )
-
-                }
-            }
-        }
-
-        stage('Upload App Image') {
-            steps {
-                script {
-
-                    docker.withRegistry("${vprofileRegistry}", 
-                    "${registryCredential}") {
-
-                        dockerImage.push("${BUILD_NUMBER}")
-                        dockerImage.push("latest")
-
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to staging ECS') {
-            steps {
-                withAWS(credentials: 'awscreds', region: 'us-east-1') {
-                    sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
-                } 
-            }
-        }
     }
-
 
     post {
 
@@ -158,6 +97,7 @@ pipeline {
             slackSend(
                 channel: '#jenkinscicd',
                 color: COLOR_MAP[currentBuild.currentResult],
+
                 message: """
 *${currentBuild.currentResult}:* Job ${env.JOB_NAME}
 Build Number: ${env.BUILD_NUMBER}
