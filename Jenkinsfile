@@ -28,6 +28,13 @@ pipeline {
         SONARSERVER = 'sonarserver'
         SONARSCANNER = 'sonarscanner'
 
+        registryCredential = 'dockerhub-creds'
+
+        appRegistry = 'tcollins520/vprofileapp'
+
+        dockerHubRegistry = 'https://index.docker.io/v1/'
+
+
     }
 
     stages {
