@@ -15,21 +15,22 @@ spec:
         app: vproapp
     spec:
       containers:
-       - name: vproapp
-         image: "{{ .Values.appimage.repository }}:{{ .Values.appimage.tag }}"
-         imagePullPolicy: Always
+        - name: vproapp
+          image: "{{ .Values.appimage.repository }}:{{ .Values.appimage.tag }}"
+          imagePullPolicy: Always
 
-         ports:
-          - name: vproapp-port
-            containerPort: 8080
-       initContainers:
+          ports:
+            - name: vproapp-port
+              containerPort: 8080
+
+      initContainers:
         - name: init-mydb
           image: busybox
           command:
             [
               "sh",
               "-c",
-              "until nslookup vprodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;",
+              "until nslookup vprodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;"
             ]
 
         - name: init-memcache
@@ -38,5 +39,6 @@ spec:
             [
               "sh",
               "-c",
-              "until nslookup vprocache01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;",
-            ] 
+              "until nslookup vprocache01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for memcache; sleep 2; done;"
+            ]
+
